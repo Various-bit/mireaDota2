@@ -1,0 +1,14 @@
+services:
+  bot:
+    build: .
+    container_name: dotabot
+    restart: unless-stopped   # поднимется после падения и после перезагрузки сервера
+    env_file: .env
+    environment:
+      # БД лежит в томе, чтобы переживать пересборку контейнера
+      DATABASE_URL: sqlite+aiosqlite:////data/bot.db
+    volumes:
+      - bot_data:/data
+
+volumes:
+  bot_data:
